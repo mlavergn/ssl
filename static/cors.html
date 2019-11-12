@@ -1,0 +1,45 @@
+<script>
+	function log(message) {
+		document.getElementById('io').innerText += message + '\n';
+	}
+
+	function send(url) {
+		log('\nSending: ' + url);
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', url);
+		xhr.setRequestHeader('Authorization', 'DEMO');
+		xhr.onerror = function() {
+			log('Error: ' + xhr.statusText);
+		};
+		xhr.onreadystatechange = function() {
+			switch(xhr.readyState) {
+				case XMLHttpRequest.UNSENT:
+					log('UNSENT status ' + xhr.status + ' ' + xhr.statusText);
+					break;
+				case XMLHttpRequest.OPENED:
+					log('OPENED status ' + xhr.status + ' ' + xhr.statusText);
+					break;
+				case XMLHttpRequest.HEADERS_RECEIVED:
+					log('HEADERS_RECEIVED status ' + xhr.status + ' ' + xhr.statusText);
+					break;
+				case XMLHttpRequest.LOADING:
+					log('LOADING status ' + xhr.status + ' ' + xhr.statusText);
+					break;
+				case XMLHttpRequest.DONE:
+					log('DONE status ' + xhr.status + ' ' + xhr.statusText);
+					log('Response type: ' + xhr.responseType);
+					log('Response length: ' + xhr.responseText.length);
+					break;
+				default:
+					log('*other* status ' + xhr.status + ' ' + xhr.statusText);
+			}
+		};
+		xhr.send();
+	}
+</script>
+
+<body>
+	<input type="text" id="url" value="https://localhost:8443/cors"/>
+	<input type="button" onclick="send(document.getElementById('url').value)" value="Send"/><hr/>
+	<pre id="io"></pre>
+</body>

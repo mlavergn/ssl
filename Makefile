@@ -15,14 +15,18 @@ DAYS   ?= 3650
 # Subject info
 #
 
-ORG    := Example\ Inc.
-DEPT   := IT
-STATE  := California
-CITY   := San\ Francisco
-HOST   := $(NAME).$(DOMAIN)
-ALT    := $(NAME)-alt.$(DOMAIN)
+ORG     := Example\ Inc.
+DEPT    := IT
+CITY    := San\ Francisco
+STATE   := California
+COUNTRY := US
+HOST    := $(NAME).$(DOMAIN)
+ALT     := $(NAME)-alt.$(DOMAIN)
 
-SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=US/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(ALT)/emailAddress=$(EMAIL)'
+SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=${CTRY}/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(ALT)/emailAddress=$(EMAIL)'
+
+subj:
+	@echo $(SUBJ)
 
 #
 # SSH
@@ -84,13 +88,13 @@ eccheck:
 ECOPTS := -sigalgs ECDSA+SHA384:ECDSA+SHA256 -verify 1 -named_curve secp384r1
 
 browser:
-	open https://localhost:8443
+	open https://localhost:8443/static/cors.html
 
 www: browser
-	openssl s_server -key $(NAME).key -cert $(NAME).crt -www -tls1_2 -accept 8443
+	openssl s_server -key $(NAME).key -cert $(NAME).crt -WWW -tls1_2 -accept 8443
 
 cli:
-	openssl s_client -debug -connect localhost:8443 -prexit
+	openssl s_client -debug -connect localhost:8443 -prexit -showcerts
 
 #
 # Cleanup
@@ -120,4 +124,4 @@ carenew:
 #
 
 aws:
-	aws iam upload-server-certificate --server-certificate-name $(HOST) --certificate-body file://$(NAME).crt --private-key file://$(NAME).key --certificate-chain file://server.chain
+	aws iam upload-server-certificate --server-certificate-name $(HOST) --certificate-body file://$(NAME).crt --private-key file://$(NAME).key --certificate-chain file://$(NAME).cacrt
