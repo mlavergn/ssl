@@ -1,2 +1,3 @@
-# ssl-template
-SSL Setup and Testing Template
+# SSL
+
+SSL project template with comon SSL types
