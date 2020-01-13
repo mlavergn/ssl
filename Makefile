@@ -23,7 +23,7 @@ COUNTRY := US
 HOST    := $(NAME).$(DOMAIN)
 ALT     := $(NAME)-alt.$(DOMAIN)
 
-SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=${CTRY}/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(ALT)/emailAddress=$(EMAIL)'
+SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=${COUNTRY}/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(ALT)/emailAddress=$(EMAIL)'
 
 subj:
 	@echo $(SUBJ)
