@@ -1,3 +1,3 @@
 # SSL
 
-SSL project template with comon SSL types
+SSL project template with common certificate operations
