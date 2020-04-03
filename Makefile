@@ -6,7 +6,7 @@
 ###############################################
 
 DOMAIN ?= example.com
-NAME   ?= demo
+NAME   ?= www
 EMAIL  ?= admin@$(DOMAIN)
 
 DAYS   ?= 3650
@@ -21,9 +21,8 @@ CITY    := San\ Francisco
 STATE   := California
 COUNTRY := US
 HOST    := $(NAME).$(DOMAIN)
-ALT     := $(NAME)-alt.$(DOMAIN)
 
-SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=${COUNTRY}/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(ALT)/emailAddress=$(EMAIL)'
+SUBJ   := '/O=$(ORG)/OU=$(DEPT)/C=${COUNTRY}/ST=$(STATE)/L=$(CITY)/CN=$(HOST)/subjectAltName=$(DOMAIN)/emailAddress=$(EMAIL)'
 
 subj:
 	@echo $(SUBJ)
